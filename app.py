@@ -121,8 +121,11 @@ def callback():
     except Exception as e:
         return f"Failed to get Spotify access token: {e}", 500
 
-    sp = spotipy.Spotify(auth=access_token)
-
+sp = spotipy.Spotify(
+    auth=access_token,
+    requests_timeout=5,
+    retries=0
+)
     try:
         me = sp.current_user()
         print("CURRENT USER:", me)
@@ -141,19 +144,19 @@ def callback():
     uris = []
     missed = []
 
-    for title in song_titles[:15]:
-        time.sleep(0.1)
-        try:
-            result = sp.search(q=f'track:"{title}"', type="track", limit=1)
-            items = result["tracks"]["items"]
+for title in song_titles[:10]:
+    try:
+        result = sp.search(q=title, type="track", limit=1)
+        items = result["tracks"]["items"]
 
-            if items:
-                uris.append(items[0]["uri"])
-            else:
-                missed.append(title)
-        except Exception as e:
-            print(f"Search failed for {title}: {e}")
+        if items:
+            uris.append(items[0]["uri"])
+        else:
             missed.append(title)
+
+    except Exception as e:
+        print(f"Search failed for {title}: {e}")
+        break  # 🔥 STOP if rate limited
 
     print("USER ID:", me.get("id"))
     print("DATE:", date)
