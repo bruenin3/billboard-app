@@ -78,7 +78,11 @@ def home():
     return """
         <h2>Create Billboard Playlist</h2>
         <form action="/login">
-            Enter date (YYYY-MM-DD): <input name="date">
+            Enter date (YYYY-MM-DD): <input type="text" 
+    name="date" 
+    placeholder="e.g. 2001-09-11"
+    required
+>
             <button type="submit">Create Playlist</button>
         </form>
     """
