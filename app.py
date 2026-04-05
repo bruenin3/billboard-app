@@ -4,6 +4,7 @@ from spotipy.oauth2 import SpotifyOAuth
 import requests
 from bs4 import BeautifulSoup
 import os
+import time
 
 app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
@@ -140,7 +141,8 @@ def callback():
     uris = []
     missed = []
 
-    for title in song_titles[:40]:
+    for title in song_titles[:15]:
+        time.sleep(0.1)
         try:
             result = sp.search(q=f'track:"{title}"', type="track", limit=1)
             items = result["tracks"]["items"]
