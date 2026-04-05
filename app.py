@@ -140,7 +140,7 @@ def callback():
     uris = []
     missed = []
 
-    for title in song_titles:
+    for title in song_titles[:40]:
         try:
             result = sp.search(q=f'track:"{title}"', type="track", limit=1)
             items = result["tracks"]["items"]
