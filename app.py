@@ -144,7 +144,7 @@ sp = spotipy.Spotify(
     uris = []
     missed = []
 
-for title in song_titles[:10]:
+    for title in song_titles[:10]:
     try:
         result = sp.search(q=title, type="track", limit=1)
         items = result["tracks"]["items"]
